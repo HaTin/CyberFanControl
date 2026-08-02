@@ -1,0 +1,392 @@
+<Window x:Class="CyberFanControl.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CYBER FAN CONTROL" Height="455" Width="780"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <!-- Neon Button -->
+        <Style x:Key="NeonBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#00F0FF"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Padding" Value="14,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg" Background="#0D1117" BorderBrush="#00F0FF" BorderThickness="1"
+                                CornerRadius="3" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#00F0FF"/>
+                                <Setter Property="Foreground" Value="#0A0A0F"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#00C0CC"/>
+                                <Setter Property="Foreground" Value="#0A0A0F"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Red Button -->
+        <Style x:Key="RedBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FF0044"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Padding" Value="14,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg" Background="#0D1117" BorderBrush="#FF0044" BorderThickness="1"
+                                CornerRadius="3" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#FF0044"/>
+                                <Setter Property="Foreground" Value="#0A0A0F"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#CC0033"/>
+                                <Setter Property="Foreground" Value="#0A0A0F"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Cyber Checkbox -->
+        <Style x:Key="CyberChk" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="box" Width="14" Height="14" BorderBrush="#00F0FF" BorderThickness="1"
+                                    CornerRadius="2" Margin="0,0,6,0" VerticalAlignment="Center">
+                                <Path x:Name="check" Data="M 2,6 L 5,10 L 11,2" Stroke="#00F0FF"
+                                      StrokeThickness="1.5" Visibility="Collapsed"/>
+                            </Border>
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="check" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="box" Property="Background" Value="#1A2A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Magenta Checkbox -->
+        <Style x:Key="MagentaChk" TargetType="CheckBox" BasedOn="{StaticResource CyberChk}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="box" Width="14" Height="14" BorderBrush="#FF00AA" BorderThickness="1"
+                                    CornerRadius="2" Margin="0,0,6,0" VerticalAlignment="Center">
+                                <Path x:Name="check" Data="M 2,6 L 5,10 L 11,2" Stroke="#FF00AA"
+                                      StrokeThickness="1.5" Visibility="Collapsed"/>
+                            </Border>
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="check" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="box" Property="Background" Value="#2A1A2A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Window Buttons -->
+        <Style x:Key="WinBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#666680"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="10,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg" Background="Transparent" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#1A1A2E"/>
+                                <Setter Property="Foreground" Value="#00F0FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="#0A0A0F" BorderBrush="#00F0FF" BorderThickness="1" CornerRadius="12" Margin="0">
+        <DockPanel>
+            <!-- Title Bar -->
+            <Border DockPanel.Dock="Top" Background="#0D0D12" Height="32" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0">
+                        <TextBlock Text="⬡" FontSize="14" Foreground="#00F0FF" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="CYBER FAN CONTROL" FontFamily="Consolas" FontSize="11" Foreground="#00F0FF"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Content="─" Click="MinBtn" Style="{StaticResource WinBtn}" Margin="0,0,2,0"/>
+                        <Button Content="✕" Click="CloseBtn" Style="{StaticResource WinBtn}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Status Bar -->
+            <Border DockPanel.Dock="Bottom" Background="#0D0D12" Padding="8,3">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse x:Name="statusDot" Width="7" Height="7" Fill="#FF0033" Margin="0,0,6,0"/>
+                    <TextBlock x:Name="txtStatus" Text="未连接" FontFamily="Consolas" FontSize="10" Foreground="#666680"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Main Content -->
+            <Grid Margin="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260"/>
+                    <ColumnDefinition Width="6"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ===== LEFT PANEL ===== -->
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- CPU -->
+                        <Border Background="#12151A" BorderBrush="#00F0FF" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,4">
+                            <StackPanel>
+                                <TextBlock Text="CPU" FontFamily="Consolas" FontSize="10" Foreground="#666680" Margin="0,0,0,6"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Canvas Grid.Column="0" x:Name="CpuFanCanvas" Width="60" Height="60" HorizontalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="TEMP " FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="txtCpuTemp" Text="--" FontFamily="Consolas" FontSize="18" FontWeight="Bold" Foreground="#00FF88"/>
+                                            <TextBlock Text="°C" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Bottom" Margin="2,0,0,2"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="RPM  " FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="txtCpuRpm" Text="--" FontFamily="Consolas" FontSize="14" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="DUTY " FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="txtCpuDuty" Text="--" FontFamily="Consolas" FontSize="14" FontWeight="Bold" Foreground="#00BFFF"/>
+                                            <TextBlock Text="%" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Bottom" Margin="1,0,0,2"/>
+                                            <TextBlock Text=" 目标" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                            <TextBlock x:Name="txtCpuTargetDuty" Text="--" FontFamily="Consolas" FontSize="14" FontWeight="Bold" Foreground="#00BFFF"/>
+                                            <TextBlock Text="%" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Bottom" Margin="1,0,0,2"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- GPU -->
+                        <Border Background="#12151A" BorderBrush="#FF00AA" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,4">
+                            <StackPanel>
+                                <TextBlock Text="GPU" FontFamily="Consolas" FontSize="10" Foreground="#666680" Margin="0,0,0,6"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Canvas Grid.Column="0" x:Name="GpuFanCanvas" Width="60" Height="60" HorizontalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="TEMP " FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="txtGpuTemp" Text="--" FontFamily="Consolas" FontSize="18" FontWeight="Bold" Foreground="#00FF88"/>
+                                            <TextBlock Text="°C" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Bottom" Margin="2,0,0,2"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="RPM  " FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="txtGpuRpm" Text="--" FontFamily="Consolas" FontSize="14" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="DUTY " FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="txtGpuDuty" Text="--" FontFamily="Consolas" FontSize="14" FontWeight="Bold" Foreground="#FF00AA"/>
+                                            <TextBlock Text="%" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Bottom" Margin="1,0,0,2"/>
+                                            <TextBlock Text=" 目标" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                            <TextBlock x:Name="txtGpuTargetDuty" Text="--" FontFamily="Consolas" FontSize="14" FontWeight="Bold" Foreground="#FF00AA"/>
+                                            <TextBlock Text="%" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Bottom" Margin="1,0,0,2"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- GPU Info -->
+                        <Border Background="#12151A" BorderBrush="#FF00AA" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,4">
+                            <StackPanel>
+                                <TextBlock Text="GPU INFO" FontFamily="Consolas" FontSize="10" Foreground="#666680" Margin="0,0,0,6"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="CORE" FontFamily="Consolas" FontSize="9" Foreground="#666680"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtGpuCore" Text="--" FontFamily="Consolas" FontSize="11" Foreground="#FF00AA"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="MEMORY" FontFamily="Consolas" FontSize="9" Foreground="#666680"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtGpuMem" Text="--" FontFamily="Consolas" FontSize="11" Foreground="#FF00AA"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="USAGE" FontFamily="Consolas" FontSize="9" Foreground="#666680"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtGpuUsage" Text="--" FontFamily="Consolas" FontSize="11" Foreground="#FF00AA"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="NAME" FontFamily="Consolas" FontSize="9" Foreground="#666680"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtGpuName" Text="--" FontFamily="Consolas" FontSize="9" Foreground="#888" TextTrimming="CharacterEllipsis"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- GPU Controls -->
+                        <Border Background="#12151A" BorderBrush="#FF00AA" BorderThickness="1" CornerRadius="4" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="GPU CONTROL" FontFamily="Consolas" FontSize="10" Foreground="#666680" Margin="0,0,0,6"/>
+                                <!-- 限制频率 -->
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                    <CheckBox x:Name="chkGpuFreq" Style="{StaticResource MagentaChk}" Content="限制频率"
+                                              Checked="GpuCtrl_Changed" Unchecked="GpuCtrl_Changed" VerticalAlignment="Center"/>
+                                    <TextBox x:Name="txtGpuFreq" Text="0" FontFamily="Consolas" FontSize="10"
+                                             Width="55" Margin="6,0,0,0" Background="#0A0A12" Foreground="#E0E0E0"
+                                             BorderBrush="#FF00AA" BorderThickness="1" Padding="4,2"/>
+                                    <TextBlock Text="MHz" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                </StackPanel>
+                                <!-- 显存偏移 -->
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                    <CheckBox x:Name="chkMemOffset" Style="{StaticResource MagentaChk}" Content="显存偏移"
+                                              Checked="GpuCtrl_Changed" Unchecked="GpuCtrl_Changed" VerticalAlignment="Center"/>
+                                    <TextBox x:Name="txtMemOffset" Text="0" FontFamily="Consolas" FontSize="10"
+                                             Width="55" Margin="6,0,0,0" Background="#0A0A12" Foreground="#E0E0E0"
+                                             BorderBrush="#FF00AA" BorderThickness="1" Padding="4,2"/>
+                                    <TextBlock Text="MHz" FontFamily="Consolas" FontSize="9" Foreground="#666680" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Separator -->
+                <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Stretch" Background="#1A1A2E"/>
+
+                <!-- ===== RIGHT PANEL ===== -->
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Curve Editor -->
+                    <Border Grid.Row="0" Background="#12151A" BorderBrush="#00F0FF" BorderThickness="1" CornerRadius="4" Padding="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <!-- Tabs -->
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,6">
+                                <Border x:Name="tabCpu" Background="#00F0FF" CornerRadius="3" Padding="12,4" Cursor="Hand"
+                                        BorderBrush="#00F0FF" BorderThickness="1"
+                                        MouseLeftButtonDown="TabCpu_Click">
+                                    <TextBlock x:Name="tabCpuText" Text="CPU 曲线" FontFamily="Consolas" FontSize="10" Foreground="#0A0A0F" FontWeight="Bold"/>
+                                </Border>
+                                <Border x:Name="tabGpu" Background="#1A1A2E" CornerRadius="3" Padding="12,4" Margin="4,0,0,0" Cursor="Hand"
+                                        BorderBrush="#FF00AA" BorderThickness="1"
+                                        MouseLeftButtonDown="TabGpu_Click">
+                                    <TextBlock x:Name="tabGpuText" Text="GPU 曲线" FontFamily="Consolas" FontSize="10" Foreground="#FF00AA"/>
+                                </Border>
+                            </StackPanel>
+                            <!-- Canvas -->
+                            <Canvas Grid.Row="1" x:Name="CurveCanvas" Background="#0A0A12" ClipToBounds="True"
+                                    MouseLeftButtonDown="CurveCanvas_MouseLeftButtonDown"
+                                    MouseMove="CurveCanvas_MouseMove"
+                                    MouseLeftButtonUp="CurveCanvas_MouseLeftButtonUp"
+                                    MouseRightButtonDown="CurveCanvas_MouseRightButtonDown"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Bottom Controls -->
+                    <StackPanel Grid.Row="1" Margin="0,4,0,0">
+                        <!-- Options -->
+                        <Border Background="#12151A" BorderBrush="#00F0FF" BorderThickness="1" CornerRadius="4" Padding="8,6" Margin="0,0,0,4">
+                            <WrapPanel>
+                                <CheckBox x:Name="chkTakeOver" Style="{StaticResource CyberChk}" Content="接管风扇"
+                                          Checked="Opt_Changed" Unchecked="Opt_Changed" Margin="0,0,14,0"/>
+                                <CheckBox x:Name="chkLinear" Style="{StaticResource CyberChk}" Content="线性控制"
+                                          Checked="Opt_Changed" Unchecked="Opt_Changed" Margin="0,0,14,0"/>
+                                <CheckBox x:Name="chkSoft" Style="{StaticResource CyberChk}" Content="软性控制"
+                                          Checked="Opt_Changed" Unchecked="Opt_Changed" Margin="0,0,14,0"/>
+                                <CheckBox x:Name="chkForce" Style="{StaticResource CyberChk}" Content="最大风冷"
+                                          Checked="Opt_Changed" Unchecked="Opt_Changed" Margin="0,0,14,0"/>
+                                <CheckBox x:Name="chkAutorun" Style="{StaticResource CyberChk}" Content="开机启动"
+                                          Checked="Autorun_Changed" Unchecked="Autorun_Changed"/>
+                            </WrapPanel>
+                        </Border>
+
+                        <!-- Params + Buttons -->
+                        <Border Background="#12151A" BorderBrush="#00F0FF" BorderThickness="1" CornerRadius="4" Padding="8,6">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <TextBlock Text="间隔" FontFamily="Consolas" FontSize="10" Foreground="#666680" VerticalAlignment="Center"/>
+                                    <TextBox x:Name="txtInterval" Text="2" FontFamily="Consolas" FontSize="10" Width="35"
+                                             Background="#0A0A12" Foreground="#E0E0E0" BorderBrush="#00F0FF" BorderThickness="1" Padding="4,2" Margin="4,0,4,0"/>
+                                    <TextBlock Text="秒  过渡" FontFamily="Consolas" FontSize="10" Foreground="#666680" VerticalAlignment="Center"/>
+                                     <TextBox x:Name="txtTransition" Text="3" FontFamily="Consolas" FontSize="10" Width="35"
+                                              Background="#0A0A12" Foreground="#E0E0E0" BorderBrush="#00F0FF" BorderThickness="1" Padding="4,2" Margin="4,0,4,0"/>
+                                     <TextBlock Text="°C" FontFamily="Consolas" FontSize="10" Foreground="#666680" VerticalAlignment="Center"/>
+                                     <TextBlock Text="  最低" FontFamily="Consolas" FontSize="10" Foreground="#666680" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                     <TextBox x:Name="txtMinDuty" Text="18" FontFamily="Consolas" FontSize="10" Width="35"
+                                              Background="#0A0A12" Foreground="#E0E0E0" BorderBrush="#00F0FF" BorderThickness="1" Padding="4,2" Margin="4,0,4,0"/>
+                                     <TextBlock Text="%" FontFamily="Consolas" FontSize="10" Foreground="#666680" VerticalAlignment="Center"/>
+                                 </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="保存" Style="{StaticResource NeonBtn}" Margin="0,0,6,0" Click="SaveBtn"/>
+                                    <Button Content="重置" Style="{StaticResource RedBtn}" Click="ResetBtn"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </DockPanel>
+    </Border>
+</Window>
