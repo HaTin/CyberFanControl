@@ -3,7 +3,9 @@
 Clevo 蓝天笔记本风扇控制台（WPF / .NET 8）
 
 基于原版 [MyFanControl](https://github.com/xl-Synapse/MyFanControl) 的 C++/MFC 实现重写为 WPF 赛博风格界面，修复了原版多项逻辑缺陷并扩展了 GPU 控制。
+
 ![图片](png/1.png)
+
 ## 功能特性
 
 - 实时监控 CPU/GPU 温度、风扇转速与占空比
