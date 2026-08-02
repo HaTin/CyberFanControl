@@ -27,6 +27,9 @@ public class HardwareService : IDisposable
     private int _softReassertCounter;
     private int _lastSentCpuDuty = -1;
     private int _lastSentGpuDuty = -1;
+    private static readonly FanLogger Logger = new(
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CyberFanControl.log"),
+        maxSize: 512 * 1024);
 
     public string InitStatus { get; private set; } = "未初始化";
     public bool IsInitialized => _ecInitialized;
@@ -134,7 +137,7 @@ public class HardwareService : IDisposable
                 bool gpuOdd = Math.Abs(s.GpuDuty - _targetDuty[1]) >= 5 ||
                     (s.GpuFanRpm > 4000 && _targetDuty[1] < 50);
                 if (cpuOdd || gpuOdd)
-                    Log($"Fan check: CPU read={s.CpuDuty}% target={_targetDuty[0]}% rpm={s.CpuFanRpm} | GPU read={s.GpuDuty}% target={_targetDuty[1]}% rpm={s.GpuFanRpm}");
+                    LogDebug($"Fan check: CPU read={s.CpuDuty}% target={_targetDuty[0]}% rpm={s.CpuFanRpm} | GPU read={s.GpuDuty}% target={_targetDuty[1]}% rpm={s.GpuFanRpm}");
             }
             catch { }
         }
@@ -312,7 +315,7 @@ public class HardwareService : IDisposable
             if (safeDuty != _lastSentCpuDuty)
             {
                 _lastSentCpuDuty = safeDuty;
-                Log($"SetFanDuty CPU sent={safeDuty}%");
+                LogDebug($"SetFanDuty CPU sent={safeDuty}%");
             }
         }
         catch { }
@@ -332,7 +335,7 @@ public class HardwareService : IDisposable
             if (safeDuty != _lastSentGpuDuty)
             {
                 _lastSentGpuDuty = safeDuty;
-                Log($"SetFanDuty GPU sent={safeDuty}%");
+                LogDebug($"SetFanDuty GPU sent={safeDuty}%");
             }
         }
         catch { }
@@ -355,12 +358,9 @@ public class HardwareService : IDisposable
         try { NativeInterop.SetFanDutyAuto(3); } catch { }
     }
 
-    private static readonly string LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CyberFanControl.log");
+    private static void Log(string msg) => Logger.Info(msg);
 
-    private static void Log(string msg)
-    {
-        try { File.AppendAllText(LogPath, $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n"); } catch { }
-    }
+    private static void LogDebug(string msg) => Logger.Debug(msg);
 
     private string GpuSnapshot()
     {
@@ -514,6 +514,7 @@ public class HardwareService : IDisposable
         _softControlThread?.Join(1000);
         if (_ecInitialized) try { ResetAllFans(); } catch { }
         if (_gpuInitialized) try { LockGpuFrequency(0, 0); NativeInterop.CloseGPU_API(); } catch { }
+        Logger.Dispose();
         GC.SuppressFinalize(this);
     }
 }
